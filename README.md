@@ -86,7 +86,7 @@
 > > > >
 > > > > * valid_urls(List[str]) - HTML字符串中有效的url列表。
 > > >
-> > > extract_text(html) - 从html中提取出有效的中文文本（出现在中文文本中的数字、英文、日文、韩文也应视作中文）
+> > > extract_text(html) - 从html中提取出有效的中文文本（出现在中文文本中的数字、英文、日文、韩文等也应视作中文）
 > > > > 参数
 > > > > * html(str) - 待处理的HTML字符串
 > > > >
