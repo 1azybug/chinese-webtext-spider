@@ -1,5 +1,51 @@
 # chinese-webtext-spider
 
+
+# 数据库格式
+> url_database
+> > website.txt
+> >
+> > database
+> > > bilibili.com.txt
+> > >
+> > > ...
+> > >
+> > > ...
+> > >
+> > >zhihu.com.txt
+>
+> text_database
+> > website.txt
+> >
+> > database
+> > > bilibili.com.txt
+> > >
+> > > ...
+> > >
+> > > ...
+> > >
+> > >zhihu.com.txt
+
+# 文件格式
+> url文件格式
+> >
+> > url1 \n url2 \n url3 \n ......
+> * \n 表示换行
+>
+> 文本文件格式
+> > \<bop\> \<bod\>页面1文本1\<eod\> \<bod\>页面1文本2\<eod\> \<bod\>页面1文本3\<eod\> ...... \<eop\>
+> >
+> > \<bop\> \<bod\>页面2文本1\<eod\> \<bod\>页面2文本2\<eod\> \<bod\>页面2文本3\<eod\> ...... \<eop\>
+> >
+> > ......
+> >
+> > \<bop\> \<bod\>页面n文本1\<eod\> \<bod\>页面n文本2\<eod\> \<bod\>页面n文本3\<eod\> ...... \<eop\>
+> * \<bop\> 表示页面的开始(begin of page)
+> * \<eop\> 表示页面的结束(end of page)
+> * \<bod\> 表示文本的开始(begin of document)
+> * \<eod\> 表示文本的结束(end of document)
+
+
 # 说明文档
 > ## class Spider(database_path, sleep_time=35)
 > > #### 说明
