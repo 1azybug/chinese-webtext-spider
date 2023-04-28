@@ -14,7 +14,7 @@ class Evaluator:
             self.tokenizer = BertTokenizer.from_pretrained("uer/albert-large-chinese-cluecorpussmall")
         if not self.model:
             self.model = AutoModelForSequenceClassification.from_pretrained("uer/albert-large-chinese-cluecorpussmall", num_labels=2)
-            self.model.load_state_dict(torch.load("large.pt",map_location=self.device))
+            self.model.load_state_dict(torch.load("./large.pt",map_location=self.device))
             self.model.to(self.device)
 
     def predict(self,text1,text2=None):
