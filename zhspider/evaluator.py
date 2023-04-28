@@ -14,8 +14,15 @@ class Evaluator:
             self.tokenizer = BertTokenizer.from_pretrained("uer/albert-large-chinese-cluecorpussmall")
         if not self.model:
             self.model = AutoModelForSequenceClassification.from_pretrained("uer/albert-large-chinese-cluecorpussmall", num_labels=2)
-            self.model.load_state_dict(torch.load("./large.pt",map_location=self.device))
+
+            # 获取当前模块所在文件的绝对路径
+            import os
+            module_path = os.path.abspath(__file__)
+            model_path = os.path.join(os.path.dirname(module_path), 'large.pt')
+            
+            self.model.load_state_dict(torch.load(model_path,map_location=self.device))
             self.model.to(self.device)
+
 
     def predict(self,text1,text2=None):
         self.model.eval()
