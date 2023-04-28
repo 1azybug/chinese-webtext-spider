@@ -1,7 +1,7 @@
-from spider import Spider
+from .spider import Spider
 import re
-from evaluator import Evaluator
-from extractor import Extractor
+from .evaluator import Evaluator
+from .extractor import Extractor
 
 class BilibiliSpider(Spider):
     def __init__(self, database_path, sleep_time=15, mode="external", debug=True, load_old=False):
@@ -76,8 +76,8 @@ class BilibiliSpider(Spider):
             content = re.findall(reg,content)
             str_list = []
             for c in content:
-                print(c)
-                print(c[14:-3])
+                # print(c)
+                # print(c[14:-3])
                 str_list.append(c[14:-3])
             content = '\n'.join(str_list)
 
@@ -207,12 +207,12 @@ class CSDNSpider(Spider):
                         # print('-'*40)
                     # 删除latex渲染
                     elif r'<span class="katex-html">' in c_list[ind]:
-                        print(c_list[ind])
+                        # print(c_list[ind])
                         c_list[ind] = re.sub(r'</h\d>|</p>|</br>|</title>|</li>|<br />','\n',c_list[ind])
                         c_list[ind] = c_list[ind].split('\n')[1:]
                         c_list[ind] = '\n'.join(c_list[ind])
                         # print(c_list[ind])
-                        print('-'*40)
+                        # print('-'*40)
                         
                      
                 c = '\n'.join(c_list)
