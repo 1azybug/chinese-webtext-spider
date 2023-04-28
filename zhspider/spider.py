@@ -2,11 +2,9 @@ import requests
 import json
 import time
 import os
-import time
-import json
 import urllib
-from evaluator import Evaluator
-from extractor import Extractor
+from .evaluator import Evaluator
+from .extractor import Extractor
 
 
 
@@ -177,7 +175,7 @@ class Spider:
                 break
             
             for url in geted_urls:
-                print('爬取：',url)
+                # print('爬取：',url)
                 html=self.get_html(url)
                 # print(html)
                 need_add_urls=extractor.extract_url(html)
@@ -275,7 +273,7 @@ class Spider:
         #         f.write('<eop>\n')
 
         #保存visited_urls
-        print('保存json')
+        # print('保存json')
 
         file_name = os.path.join(self.database_path,'visited_urls.json')
         if os.path.exists(file_name):
