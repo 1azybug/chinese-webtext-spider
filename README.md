@@ -1,5 +1,7 @@
 # chinese-webtext-spider
 
+本项目用于自动爬取中文Webtext。清洗数据的方法参考了C4和Webtext数据集的清洗。
+
 # Quick Start
 
 ## 安装
