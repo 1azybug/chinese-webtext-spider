@@ -241,8 +241,8 @@ class BilibiliSpider(Spider):
 > > * database_path(str) - 数据库路径，spider将会通过该参数与数据库交互
 > > * sleep_time(int) - 网站被爬过后的冷却时间
 > > * urls(Dict[str,List[str]]) - 记录每个网站待爬取的url列表，从数据库中加载
-> > * visited_urls(Dict[str,Set[str]]) - 记录每个网站已经爬取过的url，从数据库中加载
-> > * docs(Dict[str,List[str]]) - 记录每个网站爬到的文档，从数据库中加载
+> > * visited_urls(Dict[str,List[str]]) - 记录每个网站已经爬取过的url，从数据库中加载
+> > * docs(Dict[str,Dict[str,List[str]]]) - 记录每个网站的网页爬到的文档，从数据库中加载
 >
 > > #### 方法
 > > > add_url(url) - 向urls添加url。
@@ -282,10 +282,80 @@ class BilibiliSpider(Spider):
 > > > > 返回
 > > > >
 > > > > * 无
+> > >
+> > > get_domain(url) - 获取url的域名
+> > >
+> > > > 参数
+> > > >
+> > > > * url(str)
+> > > >
+> > > > 返回
+> > > >
+> > > > * url的域名(str)
+> > >
+> > > crawl() - 自动爬取url和文本到数据库里
+> > >
+> > > > 参数
+> > > >
+> > > > * 无
+> > > >
+> > > > 返回
+> > > >
+> > > > * 无
+> > >
+> > > pick_webtext(html) - 从html(str)里提取想要的文本
+> > >
+> > > > 参数
+> > > >
+> > > > * html(str)
+> > > >
+> > > > 返回
+> > > >
+> > > > * List[str] 你想要的文本
+> > >
+> > > get_urls() - 在urls里获取一批url，这批url的所属的网站互不相同
+> > >
+> > > > 参数
+> > > >
+> > > > * 无
+> > > >
+> > > > 返回
+> > > >
+> > > > * List[str] url列表
+> > >
+> > > is_valid(url) - 判断一个url是否有爬取价值
+> > >
+> > > > 参数
+> > > >
+> > > > * url(str)
+> > > >
+> > > > 返回
+> > > >
+> > > > * bool 如果url正常返回True，否则返回False
+> > >
+> > > ban(url) - 额外添加不爬取url的条件
+> > >
+> > > > 参数
+> > > >
+> > > > * url(str)
+> > > >
+> > > > 返回
+> > > >
+> > > > * 默认False
+> > >
+> > > other_rule(url) - 只有满足other_rule条件的url中的文本才会被(pick_webtext方法)提取
+> > >
+> > > > 参数
+> > > >
+> > > > * url(str)
+> > > >
+> > > > 返回
+> > > >
+> > > > * 默认True
 >
 > ## class RobustSpider(database_path, sleep_time=35, extractor=Extractor(), evaluator=Evaluator())
 > > #### 说明
-> > Spider的子类，能从任意类型的网站中爬取高质量的文本
+> > Spider的子类，能从任意类型的网站中爬取文本
 > > #### 参数 
 > > * database_path(str) - 数据库路径，spider将会通过该参数与数据库交互
 > > * sleep_time(int) - 网站被爬过后的冷却时间
@@ -324,12 +394,14 @@ class BilibiliSpider(Spider):
 > > > > * valid_docs(List[str]) - HTML字符串中有效的中文文本列表。
 > > >
 > 
-> ## class Evaluator(evaluator_model=BERT(), threshold = 0.8)
+> ## class Evaluator(tokenizer=None, model=None, threshold=0.7, cuda="cpu")
 > > #### 说明
 > > 能判断一个文本是否优质，以及两个文本是否连续。
 > > #### 参数 
-> > * evaluator_model(torch.nn.Module) - 用于判断文本是否优质和连续的模型，能给出一个文本优质的概率和两个文本连续的概率。
+> > * tokenizer(tokenizers.Tokenizer) - 分词器
+> > * model(transformers.AlbertModel) - 用于判断文本是否优质和连续的模型，能给出一个文本优质的概率和两个文本连续的概率。
 > > * threshold(float) - 判断文本优质和连续的阈值，文本优质和连续的概率大于等于该阈值才被视为优质和连续。提高该阈值虽然能提高文本质量，但是会减少文本的获取效率且使文本和训练evaluator_model的正例（高质量文本）趋同；降低该阈值可以提高文本的多样性。
+> > * cuda(str) 模型推理时使用的设备，默认cpu，如果想用GPU可传入"cuda:0"
 > > #### 方法
 > > > is_good(text) - 判断text是否是高质量文本
 > > > > 参数
